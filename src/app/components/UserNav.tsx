@@ -44,21 +44,21 @@ const UserNav = ({ email, name, userImage }: iUserProps) => {
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem asChild>
-              <Link href="/sell">Sell your Product</Link>
+              <Link href="/sell" className="cursor-pointer">Sell your Product</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/settings">Settings</Link>
+              <Link href="/settings" className="cursor-pointer">Settings</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="my-products">My Products</Link>
+              <Link href="my-products" className="cursor-pointer">My Products</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/billing">Billing</Link>
+              <Link href="/billing" className="cursor-pointer">Billing</Link>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <LogoutLink>Log out</LogoutLink>
+            <LogoutLink className="cursor-pointer">Log out</LogoutLink>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

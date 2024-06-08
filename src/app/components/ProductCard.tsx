@@ -46,6 +46,7 @@ export function ProductCard({
         <CarouselNext className="mr-16" />
       </Carousel>
 
+      <div className="h-[100px]">
       <div className="flex justify-between items-center mt-2">
         <h1 className="font-semibold text-xl">{name}</h1>
         <h3 className="inline-flex items-center rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary ring-1 ring-inset  ring-primary/10">
@@ -56,6 +57,7 @@ export function ProductCard({
       <p className="text-gray-600 line-clamp-2 text-sm mt-2">
         {smallDescription}
       </p>
+      </div>
 
       <Button asChild className="w-full mt-5">
         <Link href={`/product/${id}`}>Learn More!</Link>

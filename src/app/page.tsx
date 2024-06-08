@@ -3,7 +3,7 @@ import { ProductRow } from "./components/ProductRow";
 
 export default function Home() {
   return (
-    <section className="max-w-7xl mx-auto px-4 md:px-8 mb-24">
+    <section className="max-w-7xl mx-auto px-4 md:px-8 mb-24 mt-4 lg:mt-8">
       <div className="max-w-3xl mx-auto text-2xl sm:text-5xl lg:text-6xl font-semibold text-center">
         <h1>Find the best Tailwind</h1>
         <h1 className="text-primary">Templates & Icons</h1>
