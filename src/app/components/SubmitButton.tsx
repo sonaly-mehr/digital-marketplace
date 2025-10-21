@@ -4,7 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useFormStatus } from "react-dom";
 
-export function Submitbutton({ title }: { title: string }) {
+interface SubmitButtonProps {
+  title: string;
+  disabled?: boolean;
+}
+
+export function Submitbutton({ title, disabled = false }: SubmitButtonProps) {
   const { pending } = useFormStatus();
 
   return (
@@ -15,7 +20,9 @@ export function Submitbutton({ title }: { title: string }) {
           Please Wait
         </Button>
       ) : (
-        <Button type="submit">{title}</Button>
+        <Button type="submit" disabled={disabled}>
+          {title}
+        </Button>
       )}
     </>
   );
