@@ -5,25 +5,33 @@ import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { checkStripeAccountStatus } from "@/lib/checkStripeAccountStatus";
 
-async function getData(userId: string) {
+async function checkUserAccess(userId: string) {
   const data = await prisma.user.findUnique({
     where: {
       id: userId,
     },
     select: {
       stripeConnectedLinked: true,
+      connectedAccountId: true,
     },
   });
 
-  if (data?.stripeConnectedLinked === false) {
-    return redirect("/billing");
+  // If we have a connected account but status is false, check manually
+  if (data?.connectedAccountId && data.stripeConnectedLinked === false) {
+    const isActive = await checkStripeAccountStatus(data.connectedAccountId);
+    if (isActive) {
+      return; // User is allowed to access sell page
+    }
   }
 
-  return null;
+  if (data?.stripeConnectedLinked === false) {
+    redirect("/billing");
+  }
 }
 
-const page = async () => {
+const SellPage = async () => {
   noStore();
   const { getUser } = getKindeServerSession();
   const user = await getUser();
@@ -31,7 +39,9 @@ const page = async () => {
   if (!user) {
     throw new Error("Unauthorized");
   }
-  const data = await getData(user.id);
+  
+  await checkUserAccess(user.id);
+
   return (
     <section className="max-w-7xl mx-auto px-4 md:px-8 mb-14">
       <Card>
@@ -41,4 +51,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default SellPage;

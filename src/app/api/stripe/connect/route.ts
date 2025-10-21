@@ -23,18 +23,24 @@ export async function POST(req: Request) {
     case "account.updated": {
       const account = event.data.object;
 
+      // Better condition - check if transfers are active
+      const isConnected =
+        account.capabilities?.transfers === "active" &&
+        account.charges_enabled === true &&
+        account.payouts_enabled === true;
+
       const data = await prisma.user.update({
         where: {
           connectedAccountId: account.id,
         },
         data: {
-          stripeConnectedLinked:
-            account.capabilities?.transfers === "pending" ||
-            account.capabilities?.transfers === "inactive"
-              ? false
-              : true,
+          stripeConnectedLinked: isConnected,
         },
       });
+
+      console.log(
+        `Updated user ${data.id} with stripeConnectedLinked: ${isConnected}`
+      );
       break;
     }
     default: {
